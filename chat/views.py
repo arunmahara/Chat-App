@@ -44,7 +44,19 @@ def loginUser(request):
     else:
         return redirect('home')   
 
+@login_required(login_url='/') 
 def home(request):
+    if request.method == 'POST':
+        newroom = request.POST['room']
+        if Room.objects.filter(name = newroom).exists():
+            messages.warning(request, 'Room Already Exists')
+            return redirect('home')
+        else:
+            room = Room(name = newroom)
+            room.save()
+            messages.success(request, 'Room Created')
+            return redirect('home') 
+            
     room  = Room.objects.all()
     return render(request, 'home.html', {'rooms':room})
 
