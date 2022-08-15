@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat App</title>
+    <title>CHATTY</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link href="https://fontawesomefree/css/all.min.css" rel="stylesheet" type="text/css">
 </head>
@@ -26,34 +26,28 @@
 
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent)
-
-        // var ws = new WebSocket('ws://127.0.0.1:8000/ws/ac/')
+        // var ws = new WebSocket('ws://127.0.0.1:8000/wsc/ac/Nepal/')
         var ws = new WebSocket('ws://' + window.location.host + '/ws/wsc/' + roomName + '/')
-        console.log(ws)
-        // through property
- 
-        ws.onopen = function(){  //websocket connection
-            console.log('Websocket connection open..')
-            // ws.send('hi from client')
 
+        // through property
+        ws.onopen = function(){  //websocket connection
            }
 
         ws.onmessage = function(event){  // message received from server
-            console.log('Message received from server..', event)
             var message = JSON.parse(event.data)
             document.querySelector('#chat-box').value += (message.msg + '  :@' + message.user + '\n' + '\n')
 
         }
  
         ws.onerror = function(event){
-            console.log('Websocket error occurred..', event)
+            // console.log('Websocket error occurred..', event)
         }
 
         ws.onclose = function(event){
-            console.log('Websocket connection closed..', event)
+            // console.log('Websocket connection closed..', event)
         }
 
-        document.getElementById('chat-send').onclick = function(event){
+        document.getElementById('chat-send').onclick = function(event){  //sending message to textarea from server
             const messageInputDom = document.getElementById('chat-input')
             if (messageInputDom.value.length != 0){
                 const message = messageInputDom.value

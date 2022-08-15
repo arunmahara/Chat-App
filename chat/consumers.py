@@ -12,8 +12,6 @@ class MyWebsocketConsumer(WebsocketConsumer):
 
     # this handler is called when client initially opens a connection and is about to finish the WebSocket Handshake
     def connect(self):
-        print('Websocket Connected...')
-
         self.room_name = self.scope['url_route']['kwargs']['roomName']
         #add channel to a new or existing group
         async_to_sync(self.channel_layer.group_add)(
@@ -27,10 +25,7 @@ class MyWebsocketConsumer(WebsocketConsumer):
     
     # this handler is called when data is received form client
     def receive(self, text_data=None, bytes_data=None):
-        print('Message Received from client...', text_data)
-
         data = json.loads(text_data)   #converting string (json) data to python data to save message in database
-        print(data)
         message = data['msg']
         room = Room.objects.get(name=self.room_name)
         if self.scope['user'].is_authenticated:  #user authentication
@@ -56,8 +51,6 @@ class MyWebsocketConsumer(WebsocketConsumer):
 
     # this handler is called when either connection to a client is lost , either form the client closing the connection, the server closing the connection or lost of the socket
     def disconnect(self, close_code):
-        print('Websocket Disconnected...', close_code) 
-
          # disconnect channel group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_name, self.channel_name
