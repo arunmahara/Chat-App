@@ -48,7 +48,11 @@ class MyWebsocketConsumer(WebsocketConsumer):
                 'user':  user
             })
 
-
+    def chat_message(self, event):  # sending message to client from server
+        self.send(text_data = json.dumps({
+            'msg': event['message'],
+            'user': event['user']
+        })) 
 
     # this handler is called when either connection to a client is lost , either form the client closing the connection, the server closing the connection or lost of the socket
     def disconnect(self, close_code):

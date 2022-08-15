@@ -37,6 +37,13 @@
             // ws.send('hi from client')
 
            }
+
+        ws.onmessage = function(event){  // message received from server
+            console.log('Message received from server..', event)
+            var message = JSON.parse(event.data)
+            document.querySelector('#chat-box').value += (message.msg + '  :@' + message.user + '\n' + '\n')
+
+        }
  
         ws.onerror = function(event){
             console.log('Websocket error occurred..', event)
