@@ -32,7 +32,7 @@
         <ol class="rectangle-list" >
             <h3 class="alert alert-success text-center p-1">Join Chat Room</h3>
             {% for room in rooms %}
-            <li><a href="#">{{room.name}}</a></li>
+            <li><a href="{% url 'chat' room.name %}">{{room.name}}</a></li>
             {% endfor %}
           </ol>
         </div>

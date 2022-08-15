@@ -56,7 +56,7 @@ def home(request):
             room.save()
             messages.success(request, 'Room Created')
             return redirect('home') 
-            
+
     room  = Room.objects.all()
     return render(request, 'home.html', {'rooms':room})
 
@@ -64,3 +64,10 @@ def home(request):
 def logoutUser(request):
     logout(request)
     return redirect('/')
+
+
+@login_required(login_url='/') 
+def chat(request, room_name):
+    room  = Room.objects.get(name = room_name)
+    messages = Chat.objects.filter(room=room).order_by('timestamp')
+    return render(request, 'chat.html', {'roomname':room_name, 'chat':messages})
