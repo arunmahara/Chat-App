@@ -45,4 +45,10 @@ def loginUser(request):
         return redirect('home')   
 
 def home(request):
-    return render(request, 'home.html')
+    room  = Room.objects.all()
+    return render(request, 'home.html', {'rooms':room})
+
+# logout user
+def logoutUser(request):
+    logout(request)
+    return redirect('/')
